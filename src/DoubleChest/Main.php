@@ -5,7 +5,7 @@ namespace DoubleChest;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 
-use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerInteractEvent;
 
 use pocketmine\tile\Tile;
 use pocketmine\block\Block;
@@ -50,13 +50,13 @@ class Main extends PluginBase implements Listener{
 		$block_2->level->sendBlocks([$player], [$block_2]);
     
     $tile->pairWith($tile_2);
+    $tile_2->pairWith($tile);
     
     return $tile->getInventory();
     
   }
   
-  public function onJoin(PlayerJoinEvent $ev){
-    sleep(10);
-    $ev->getPlayer()->getInventory()->addWindow($this->getDoubleChest());
+  public function onJoin(PlayerInteractEvent $ev){
+    $ev->getPlayer()->getInventory()->addWindow($this->getDoubleChest($ev->getPlayer()));
   }
 }
